@@ -10,6 +10,7 @@ from zlib import crc32
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import StratifiedShuffleSplit
 from pandas.plotting import scatter_matrix
+from sklearn.impute import SimpleImputer
 
 
 
@@ -90,9 +91,39 @@ def practice():
     corr_matrix = housing.corr()
     print("\nnew corr_matrix:\n", corr_matrix["median_house_value"].sort_values(ascending = False))
 
+    housing = strat_train_set.drop("median_house_value", axis = 1)
+    housing_labels = strat_train_set["median_house_value"].copy()
     
+    #total_bedrooms column 특성에 값이 없는 경우가 있어 고치는 방법:
+    
+    housing.dropna(subset = ["total_bedrooms"]) # option 1
+    housing.drop("total_bedrooms", axis = 1) # option 2
+    median = housing["total_bedrooms"].median() # option 3
+    housing["total_bedrooms"].fillna(median, inplace = True)
 
+    imputer = SimpleImputer(strategy = "median")
+    
+    #SimpleImputer only works on number-based data
+    #since ocean_proximity's dtype is object, drop ocean_proximity to use imputer
+    
+    housing_num = housing.drop("ocean_proximity", axis = 1)
+    
+    imputer.fit(housing_num)
+    
+    print("\nimputer statistics:\n", imputer.statistics_)
+    print("\nhousing_num medians:\n", housing_num.median().values)
 
+    X = imputer.transform(housing_num)
+
+    housing_tr = pd.DataFrame(X, columns = housing_num.columns,
+                              index = list(housing.index.values))
+    
+    #factorize()-> 각 카테고리를 다른 정숫값으로 매핑해줌
+    
+    housing_cat = housing["ocean_proximity"]
+    print("\nhousing_cat head 10:\n", housing_cat)
+    housing_cat_encoded, housing_categories = housing_cat.factorize()
+    print("\nfactorized ocean_proximity:\n", housing_cat_encoded[:10])
 
 
 if __name__ == "__main__":
