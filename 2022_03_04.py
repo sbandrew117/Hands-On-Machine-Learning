@@ -58,3 +58,4 @@ softmax_reg.fit(x, y)
 
 print("\nsoftmax regression prediction:\n", softmax_reg.predict([[5, 2]]))
 print("\nsoftmax regression prediction probability:\n", softmax_reg.predict_proba([[5, 2]]))
+
