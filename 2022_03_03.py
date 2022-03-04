@@ -1,3 +1,5 @@
+import mimetypes
+from turtle import pen
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -22,7 +24,7 @@ plt.axis([0, 2, 0, 15])
 plt.show()
 
 ##################################################################
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import ElasticNet, LinearRegression
 lin_reg = LinearRegression()
 lin_reg.fit(X, y)
 
@@ -70,7 +72,7 @@ sgd_reg.fit(X, y.ravel())
 
 print(sgd_reg.intercept_, sgd_reg.coef_)
 ##################################################################
-from sklearn.preprocessing import PolynomialFeatures
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 #Polynomial regression
 
 m = 100
@@ -89,7 +91,7 @@ lin_reg.fit(x_poly, y)
 print("\nintercept and coefficient:\n", lin_reg.intercept_, lin_reg.coef_)
 
 ##################################################################
-
+'''
 #학습 곡선
 
 from sklearn.metrics import mean_squared_error
@@ -109,9 +111,9 @@ def plot_learning_curves(model, x, y):
         
 lin_reg = LinearRegression()
 plot_learning_curves(lin_reg, x, y)
-
+'''
 ##################################################################
-
+'''
 #10차 다항 회귀 모델
 
 from sklearn.pipeline import Pipeline
@@ -121,5 +123,34 @@ polynomial_regression = Pipeline([
     ("lin_reg", LinearRegression()),
 ])
 plot_learning_curves(polynomial_regression, x, y)
+'''
 ##################################################################
+#라쏘 모델
+from sklearn.linear_model import Lasso
+lasso_reg = Lasso(alpha = 0.1)
+lasso_reg.fit(x, y)
+print("\n lasso regression prediction:\n", lasso_reg.predict([[1.5]]))
+##################################################################
+#엘라스틱 넷 모델
+from sklearn.linear_model import ElasticNet
+elastic_net = ElasticNet(alpha = 0.1, l1_ratio = 0.5)
+elastic_net.fit(x, y)
+print("\n elastic net prediction:\n", elastic_net.predict([[1.5]]))
+##################################################################
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
