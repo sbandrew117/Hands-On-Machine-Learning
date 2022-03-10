@@ -1,4 +1,5 @@
 from random import Random
+
 from statistics import mode
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import VotingClassifier
@@ -113,6 +114,7 @@ x_new = np.array([[0.8]])
 
 #모든 트리의 예측 더하기
 #y_pred = sum(tree.predict(x_new) for tree in (tree_reg1, tree_reg2, tree_reg3))
+y_pred = sum(tree.predict(x_new) for tree in (tree_reg1, tree_reg2, tree_reg3))
 
 from sklearn.ensemble import GradientBoostingRegressor
 
@@ -166,8 +168,6 @@ y_pred = xgb_reg.predict(x_val)
 xgb_reg.fit(x_train, y_train,
             eval_set=[(x_val, y_val)], early_stopping_rounds=2)
 y_pred = xgb_reg.predict(x_val)
-
-
 
 
 #차원 축소
