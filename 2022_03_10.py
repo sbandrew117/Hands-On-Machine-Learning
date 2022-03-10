@@ -279,3 +279,4 @@ from sklearn.manifold import LocallyLinearEmbedding
 lle = LocallyLinearEmbedding(n_components=2, n_neighbors=10)
 x_reduced = lle.fit_transform(x)
 
+
