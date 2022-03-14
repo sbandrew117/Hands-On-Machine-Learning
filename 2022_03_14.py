@@ -118,7 +118,10 @@ mse_test = model.evaluate(X_test, y_test)
 X_new = X_test[:3] #new sample
 y_pred = model.predict(X_new)
 
-
+#page 385 - 399: 함수형 API를 사용해 복잡한 모델 만들기 -> 복습
+#여러 개의 출력 만들기
+#서브클래싱 API로 동적 모델 만들기
+#callbacks 배개변수 사용하여 체크포인트 저장
 
 
 
