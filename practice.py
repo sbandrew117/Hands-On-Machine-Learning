@@ -15,9 +15,9 @@ training_scaled = sc.fit_transform(trainset)
 x_train = []
 y_train = []
 
-for i in range(60,1259):
+for i in range(60,249):
     x_train.append(training_scaled[i-60:i, 0])
-    y_train.append(training_scaled[i,0])
+    y_train.append(training_scaled[i, 0])
 x_train,y_train = np.array(x_train),np.array(y_train)
 
 x_train = np.reshape(x_train, (x_train.shape[0],x_train.shape[1],1))
@@ -27,3 +27,6 @@ from keras.layers import Dense
 from keras.layers import LSTM
 from keras.layers import Dropout
 
+regressor = Sequential()
+regressor.add(LSTM(units = 50,return_sequences = True,input_shape = (x_train.shape[1],1)))
+regressor.add(Dropout(0.2))
