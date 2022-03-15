@@ -96,3 +96,7 @@ import pandas as pd
 y_probas = np.stack([model(X_test_scaled, training=True)
                      for sample in range(100)])
 y_proba = y_probas.mean(axis=0)
+
+#맥스-노름 규제
+keras.layers.Dense(100, activation="elu", kernel_initializer="he_normal",
+                   kernel_constraint=keras.sconstraints.max_norm(1.))
