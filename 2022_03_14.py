@@ -79,11 +79,13 @@ print(y_proba.round(2))
 import numpy as np
 
 #predict_classes() -> 가장 높은 확률을 가진 클래스에만 관심이 있을 때
-y_pred = model.predict_classes(X_new) #version 차이로 오류
+#y_pred = model.predict_classes(X_new) #version 차이로 오류
+y_pred=model.predict(X_test)
+classes_x=np.argmax(y_pred,axis=1)
 
 
 print(y_pred)
-print(np.array(class_names)[y_pred])
+
 
 y_new = y_test[:3]
 print(y_new)
@@ -107,11 +109,11 @@ X_valid = scaler.transform(X_valid)
 X_test = scaler.transform(X_test)
 
 model = keras.models.Sequential([
-    keras.layers.Dense(30, activation="relu", input_shape=X.train.shape[1:]),
+    keras.layers.Dense(30, activation="relu", input_shape=X_train.shape[1:]),
     keras.layers.Dense(1)
 ])
 
-model.compile(loss="mean_squared_error", optiizer="sgd")
+model.compile(loss="mean_squared_error", optimizer="sgd")
 history = model.fit(X_train, y_train, epochs = 20,
                     validation_data = (X_valid, y_valid))
 mse_test = model.evaluate(X_test, y_test)
