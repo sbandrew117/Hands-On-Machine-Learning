@@ -44,3 +44,5 @@ for layer in model_B_on_A.layers[:-1]:
     
 model_B_on_A.compile(loss="binary_crossentropy", optimizer="sgd", metrics=["accuracy"])
 
+#재사용된 층의 동결을 해제한 후 학습률을 낮추는 것이 가중치가 망가지는 것 막아줌
+
