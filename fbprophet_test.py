@@ -66,13 +66,13 @@ for param in pdq:
         
 results = mod.fit()
 print('ARIMA{}x{}12 - AIC:{}'.format(param, param_seasonal, results.aic))
-'''        
-mod = sm.tsa.statespace.SARIMAX(y,
-                                order=(1, 1, 1),
-                                seasonal_order=(1, 1, 0, 12),
-                                enforce_stationarity=False,
-                                enforce_invertibility=False)
-                                '''
+
+#mod = sm.tsa.statespace.SARIMAX(y,
+                                #order=(1, 1, 1),
+                                #seasonal_order=(1, 1, 0, 12),
+                                #enforce_stationarity=False,
+                                #enforce_invertibility=False)
+
 mod = sm.tsa.statespace.SARIMAX(y, order=(1, 1, 1),
                             seasonal_order=(1, 1, 0, 12),
                             enforce_invertibility=False)                                
@@ -155,7 +155,7 @@ m = Prophet()
 m.daily_seasonality=True
 m.weekly_seasonality=True
 
-
+#Prophet
 
 furniture = furniture.rename(columns={'Order Date': 'ds', 'Sales': 'y'})
 furniture_model = Prophet(interval_width=0.95)
@@ -165,6 +165,9 @@ office_model = Prophet(interval_width=0.95)
 office_model.fit(office)
 furniture_forecast = furniture_model.make_future_dataframe(periods=36, freq='MS')
 furniture_forecast = furniture_model.predict(furniture_forecast)
+
+print("\nfurniture forecast:\n", furniture_forecast)
+
 office_forecast = office_model.make_future_dataframe(periods=36, freq='MS')
 office_forecast = office_model.predict(office_forecast)
 plt.figure(figsize=(18, 6))
@@ -185,21 +188,28 @@ forecast = pd.merge(merge_furniture_forecast, merge_office_forecast, how = 'inne
 forecast = forecast.rename(columns={'furniture_ds': 'Date'}).drop('office_ds', axis=1)
 forecast.head()
 
+print("\nforecast data:\n", forecast)
+
 plt.figure(figsize=(10, 7))
 plt.plot(forecast['Date'], forecast['furniture_trend'], 'b-')
 plt.plot(forecast['Date'], forecast['office_trend'], 'r-')
-plt.legend()
+#plt.legend()
 plt.xlabel('Date')
 plt.ylabel('Sales')
 plt.title('Furniture vs. Office Supplies Sales Trend');
 
+plt.show()
+
 plt.figure(figsize=(10, 7))
 plt.plot(forecast['Date'], forecast['furniture_yhat'], 'b-')
 plt.plot(forecast['Date'], forecast['office_yhat'], 'r-')
-plt.legend()
+#plt.legend()
 plt.xlabel('Date')
 plt.ylabel('Sales')
 plt.title('Furniture vs. Office Supplies Estimate');
+
+plt.show()
+
 
 furniture_model.plot_components(furniture_forecast);
 
