@@ -166,7 +166,9 @@ office_model.fit(office)
 furniture_forecast = furniture_model.make_future_dataframe(periods=36, freq='MS')
 furniture_forecast = furniture_model.predict(furniture_forecast)
 
-print("\nfurniture forecast:\n", furniture_forecast)
+print("\nfurniture forecast:\n", furniture_forecast.head())
+print("\nfurniture forecast:\n", furniture_forecast.info())
+print("\nfurniture forecast:\n", furniture_forecast.describe())
 
 office_forecast = office_model.make_future_dataframe(periods=36, freq='MS')
 office_forecast = office_model.predict(office_forecast)
