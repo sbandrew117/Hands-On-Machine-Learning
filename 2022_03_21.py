@@ -65,7 +65,7 @@ sparse_l1_encoder = keras.model.Sequential([
     keras.layers.Flatten(input_shape=[28, 28]),
     keras.layers.Dense(100, activation="selu"),
     keras.layers.Dense(300, activation="sigmoid"),
-    keras.layers.ActivityRegularization(l1=1e-3)
+    keras.layers.ActivityRegularization(l1=1e-3) #입력을 그대로 반환하면서 훈련 손실에 입력의 절댓값의 합을 더함.
 ])
 sparse_l1_decoder = keras.models.Sequential([
     keras.layers.Dense(100, activation="selu", input_shape=[300]),
