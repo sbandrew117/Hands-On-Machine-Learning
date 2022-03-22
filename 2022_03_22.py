@@ -36,3 +36,27 @@ for episode in range(500):
 import numpy as np
 print("\nmean, std, min, max:\n", np.mean(totals), np.std(totals), np.min(totals), np.max(totals))
 
+#할인 계수(gamma) 가 0에 가까우면 미래의 보상은 현재의 보상만큼 중요하지 않음.
+#반대로 1에 가까우면 미래의 보상이 현의 보상보다 중요함.
+
+import tensorflow as tf
+from tensorflow import keras
+
+def play_one_step(env, obs, model, loss_fn):
+    with tf.GradientTape() as tape:
+        left_proba = model(obs[np.newaxis])
+        action = (tf.random.uniform([1, 1]) > left_proba)
+        y_target = tf.constant([[1.]]) - tf.cast(action, tf.float32)
+        loss = tf.reduce_mean(loss_fn(y_target, left_proba))
+    grads = tape.gradient(loss, model.trainable_variables)
+    obs, reward, done, info = env.step(int(action[0, 0].numpy()))
+    return obs, reward, done, grads
+
+
+
+
+
+
+
+
+
